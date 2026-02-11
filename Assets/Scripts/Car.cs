@@ -1,4 +1,6 @@
 using System;
+using System.Numerics;
+using System.Threading.Tasks.Dataflow;
 using UnityEngine;
 
 [Serializable]
@@ -95,9 +97,26 @@ public class car : MonoBehaviour
             if (!wheel.wheelObject) continue;
 
             //for easy refference
-            TransformBlock wheelObj = wheel.wheelObject.transform;
+            Transform wheelObj = wheel.wheelObject.transform;
+            Transform wheelVisual = wheelObj.GetChild(0); // assuming the visual model is the first child of the wheel object
 
+            //calculate steer angle if wheelState ==1
+            if (wheel.wheelState == 1)
+            {
+                float targetAngle = wheel.turnAngle * input.x;
+                Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
+                // terp to the new steer angle
+                wheelObj.localRotation = Quaternion.Lerp(
+                    wheelObj.localRotation,
+                    targetRotation,
+                    Time.fixedDeltaTime * 5f
+                );
+            }
+            else if (wheel.wheelState == 0 && rb.velocity.magnitude > 0.04f)
+            {
+                
+            }
+                
         }
-    
     }
 }
