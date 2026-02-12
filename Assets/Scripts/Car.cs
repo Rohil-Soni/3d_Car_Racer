@@ -1,4 +1,6 @@
 using System;
+using System.Numerics;
+using System.Threading.Tasks.Dataflow;
 using UnityEngine;
 
 [Serializable]
@@ -121,6 +123,17 @@ public class car : MonoBehaviour
                 {
                     Quaternion aim = Quaternion.LookRotation(rb.GetPointVector(tmphit.point), transform.up); wheelObj.rotation = Quaternion.Lerp(wheelObj.rotation, aim, Time.fixedDeltaTime * 5f);
                     wheelObj.rotation = Quaternion.Lerp(wheelObj.rotation, aim, Time.fixedDeltaTime * 100f);
+
+                    // Determine the worl position of the wheel and velocity at that point
+                    wheel.wheelworldPosition = transform.TransformPoint(wheel.LocalPosition);
+                    Vector3 wheelVelocity = rb.GetPointVelocity(wheel.wheelworldPosition);
+
+                    // so we do not have a manually rotate by turnAngle again
+                    wheel.localVelocity = wheelObj.InverseTransformDirection(wheelVelocity);
+
+                    // Engine + Friction in the wheel's local Z axis
+                    // "wheel.torque" can be somthing like (vertical input * maxTorque), etc.
+                    
                 }
             }
         }
