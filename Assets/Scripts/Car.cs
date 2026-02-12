@@ -114,9 +114,17 @@ public class car : MonoBehaviour
             }
             else if (wheel.wheelState == 0 && rb.velocity.magnitude > 0.04f)
             {
-                
+                //For free wheels, optionally align them in direction of motion
+                RaycastHit tmphit;
+                if (Physics.Raycast(transform.TransfromPoint(wheel.LocalPosition),
+                                    -transform.up,
+                                    out tmphit,
+                                    wheelSize *2f))
+                {
+                    Quaternion aim = Quaternion.LookRotation(rb.GetPointVector(tmphit.point), transform.up); wheelObj.rotation = Quaternion.Lerp(wheelObj.rotation, aim, Time.fixedDeltaTime * 5f);
+                    wheelObj.rotation = Quaternion.Lerp(wheelObj.rotation, aim, Time.fixedDeltaTime * 100f);
+                }
             }
-                
         }
     }
 }
