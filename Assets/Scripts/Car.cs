@@ -1,6 +1,4 @@
 using System;
-using System.Numerics;
-using System.Threading.Tasks.Dataflow;
 using UnityEngine;
 
 [Serializable]
@@ -83,7 +81,7 @@ public class car : MonoBehaviour
         }
     }
 
-    void update()
+    void Update()
     {
         input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
     }
@@ -133,7 +131,7 @@ public class car : MonoBehaviour
 
                     // Engine + Friction in the wheel's local Z axis
                     // "wheel.torque" can be somthing like (vertical input * maxTorque), etc.
-                    
+
                 }
             }
         }
