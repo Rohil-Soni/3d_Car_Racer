@@ -131,7 +131,51 @@ public class car : MonoBehaviour
 
                     // Engine + Friction in the wheel's local Z axis
                     // "wheel.torque" can be somthing like (vertical input * maxTorque), etc.
+                    //Adjust or clamp as needed:
+                    wheel.torque = MathF.Clamp(input.y, -1f, 1f) * maxTorque / massInKg;
 
+                    //Rolling friction
+                    float rollingFrictionForce = -frictionCoWheel * wheel.localVelocity.z;
+
+                    //Lateral friction tries to cancel sideways slip
+                    float lateralFriction = -wheelGrip * wheel.localVelocity.x;
+                    lateralFriction = MathF.Clamp(lateralFriction, -maxGrip, maxGrip);
+
+                    //Engine force (F = torque / radius)
+                    float engineForce = wheel.torque / wheelSize;
+
+                    //Combine them in local space 
+                    Vector3 totalLocalForce = new Vector3(
+                        lateralFriction,
+                        0f,
+                        engineForce + rollingFrictionForce
+                    );
+
+                    wheel.localSlipDirection = totalLocalForce;
+
+                    //Transform to world space
+                    Vector3 totalWorldForce = wheelObj.TransformDirection(totalLocalForce);
+                    wheel.worldSlipDirection = totalWorldForce;
+
+                    // Check if the wheel is moving forward in its own local frame
+                    Forwards = wheel.localVelocity.Z > 0f;
+
+                    // Suspension (spring + damper)
+                    RaycastHit hit;
+                    if (Physics.Raycast(wheel.wheelworldPosition, -transform.up, out hit, wheelSize * 2f))
+                    {
+                        //how much spring is compressed 
+                        float raylen = wheelSize * 2f;
+                        float compression = raylen - hit.distance;
+                        //damping is difference from last frame
+                        float damping = (wheel.lastSuspensionLength - hit.distance) * dampAmount;
+                        float spring = (compression * damping) * suspensionForce;
+
+                        // clamp it 
+                        springForce = MathF.Clamp(springForce, 0f, suspensionForceClamp);
+
+                        
+                    }
                 }
             }
         }
