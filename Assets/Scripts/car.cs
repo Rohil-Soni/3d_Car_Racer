@@ -1,5 +1,4 @@
 using System;
-using System.Numerics;
 using UnityEngine;
 
 [Serializable]
@@ -115,12 +114,12 @@ public class car : MonoBehaviour
             {
                 //For free wheels, optionally align them in direction of motion
                 RaycastHit tmphit;
-                if (Physics.Raycast(transform.TransfromPoint(wheel.LocalPosition),
+                if (Physics.Raycast(transform.TransformPoint(wheel.LocalPosition),
                                     -transform.up,
                                     out tmphit,
                                     wheelSize *2f))
                 {
-                    Quaternion aim = Quaternion.LookRotation(rb.GetPointVector(tmphit.point), transform.up); wheelObj.rotation = Quaternion.Lerp(wheelObj.rotation, aim, Time.fixedDeltaTime * 5f);
+                    Quaternion aim = Quaternion.LookRotation(rb.GetPointVelocity(tmphit.point), transform.up); wheelObj.rotation = Quaternion.Lerp(wheelObj.rotation, aim, Time.fixedDeltaTime * 5f);
                     wheelObj.rotation = Quaternion.Lerp(wheelObj.rotation, aim, Time.fixedDeltaTime * 100f);
 
                     // Determine the worl position of the wheel and velocity at that point
@@ -133,14 +132,14 @@ public class car : MonoBehaviour
                     // Engine + Friction in the wheel's local Z axis
                     // "wheel.torque" can be somthing like (vertical input * maxTorque), etc.
                     //Adjust or clamp as needed:
-                    wheel.torque = MathF.Clamp(input.y, -1f, 1f) * maxTorque / massInKg;
+                    wheel.torque = Mathf.Clamp(input.y, -1f, 1f) * maxTorque / massInKg;
 
                     //Rolling friction
                     float rollingFrictionForce = -frictionCoWheel * wheel.localVelocity.z;
 
                     //Lateral friction tries to cancel sideways slip
                     float lateralFriction = -wheelGrip * wheel.localVelocity.x;
-                    lateralFriction = MathF.Clamp(lateralFriction, -maxGrip, maxGrip);
+                    lateralFriction = Mathf.Clamp(lateralFriction, -maxGrip, maxGrip);
 
                     //Engine force (F = torque / radius)
                     float engineForce = wheel.torque / wheelSize;
@@ -159,7 +158,7 @@ public class car : MonoBehaviour
                     wheel.worldSlipDirection = totalWorldForce;
 
                     // Check if the wheel is moving forward in its own local frame
-                    Forwards = wheel.localVelocity.Z > 0f;
+                    Forwards = wheel.localVelocity.z > 0f;
 
                     // Suspension (spring + damper)
                     RaycastHit hit;
@@ -173,7 +172,7 @@ public class car : MonoBehaviour
                         float spring = (compression * damping) * suspensionForce;
 
                         // clamp it 
-                        springForce = MathF.Clamp(springForce, 0f, suspensionForceClamp);
+                        spring = Mathf.Clamp(spring, 0f, suspensionForceClamp);
 
                         // direction is the surface normal
                         Vector3 springDir =hit.normal;
@@ -186,7 +185,7 @@ public class car : MonoBehaviour
                         wheelObj.position = hit.point + transform.up * wheelSize;
 
                         // Store for damping next frame
-                        wheel.lastSuspensionLenght = hit.distance;
+                        wheel.lastSuspensionLength = hit.distance;
                     }
                     else
                     {
@@ -199,10 +198,10 @@ public class car : MonoBehaviour
                     Vector3 forwardInWheelSpace = wheelObj.InverseTransformDirection(rb.GetPointVelocity(wheel.wheelworldPosition));
                     
                     // Convert that to local Z speed into Rotation about x
-                    float wheelRotationSpeed = forwardInWheelSpace.Z * 360f / wheel.wheelCircumference;
+                    float wheelRotationSpeed = forwardInWheelSpace.z * 360f / wheel.wheelCircumference;
 
                     //Rotate the visiual child
-                    wheelVisual.Rotate(Vector3.right, wheelRotationSpeed * Time.FixedDeltaTime, Space.Self);
+                    wheelVisual.Rotate(Vector3.right, wheelRotationSpeed * Time.fixedDeltaTime, Space.Self);
                 }
             }
         }

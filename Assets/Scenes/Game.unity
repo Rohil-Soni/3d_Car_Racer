@@ -245,7 +245,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.5, z: 2}
+  m_LocalScale: {x: 2, y: 0.5, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1753276770}
@@ -425,6 +425,7 @@ GameObject:
   - component: {fileID: 1753276769}
   - component: {fileID: 1753276768}
   - component: {fileID: 1753276767}
+  - component: {fileID: 1753276771}
   - component: {fileID: 1753276766}
   m_Layer: 0
   m_Name: Car
@@ -479,7 +480,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.5, z: 2}
+  m_Size: {x: 2, y: 0.5, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1753276768
 MeshRenderer:
@@ -540,13 +541,98 @@ Transform:
   m_GameObject: {fileID: 1753276765}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.090194106, y: 1.5926187, z: -0.0014820839}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1292833113}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1753276771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753276765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6544e312fba4b3a4aab27a96d6a5654f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheelPrefab: {fileID: 3165422667937192467, guid: 37d22124bc1e91629aaacacc97a304a6, type: 3}
+  wheels:
+  - wheelState: 2
+    biDirectional: 0
+    LocalPosition: {x: 1.14, y: -1.25, z: 1.17}
+    turnAngle: 0
+    lastSuspensionLength: 0
+    localSlipDirection: {x: 0, y: 0, z: 0}
+    worldSlipDirection: {x: 0, y: 0, z: 0}
+    suspensionForceDirection: {x: 0, y: 0, z: 0}
+    wheelworldPosition: {x: 0, y: 0, z: 0}
+    wheelCircumference: 0
+    torque: 0
+    parentRigidbody: {fileID: 0}
+    wheelObject: {fileID: 0}
+    hitPointForce: 0
+    localVelocity: {x: 0, y: 0, z: 0}
+  - wheelState: 2
+    biDirectional: 0
+    LocalPosition: {x: -1.14, y: -1.25, z: 1.17}
+    turnAngle: 0
+    lastSuspensionLength: 0
+    localSlipDirection: {x: 0, y: 0, z: 0}
+    worldSlipDirection: {x: 0, y: 0, z: 0}
+    suspensionForceDirection: {x: 0, y: 0, z: 0}
+    wheelworldPosition: {x: 0, y: 0, z: 0}
+    wheelCircumference: 0
+    torque: 0
+    parentRigidbody: {fileID: 0}
+    wheelObject: {fileID: 0}
+    hitPointForce: 0
+    localVelocity: {x: 0, y: 0, z: 0}
+  - wheelState: 1
+    biDirectional: 0
+    LocalPosition: {x: 1.14, y: -1.25, z: -1.17}
+    turnAngle: 0
+    lastSuspensionLength: 0
+    localSlipDirection: {x: 0, y: 0, z: 0}
+    worldSlipDirection: {x: 0, y: 0, z: 0}
+    suspensionForceDirection: {x: 0, y: 0, z: 0}
+    wheelworldPosition: {x: 0, y: 0, z: 0}
+    wheelCircumference: 0
+    torque: 0
+    parentRigidbody: {fileID: 0}
+    wheelObject: {fileID: 0}
+    hitPointForce: 0
+    localVelocity: {x: 0, y: 0, z: 0}
+  - wheelState: 1
+    biDirectional: 0
+    LocalPosition: {x: -1.14, y: -1.25, z: -1.17}
+    turnAngle: 0
+    lastSuspensionLength: 0
+    localSlipDirection: {x: 0, y: 0, z: 0}
+    worldSlipDirection: {x: 0, y: 0, z: 0}
+    suspensionForceDirection: {x: 0, y: 0, z: 0}
+    wheelworldPosition: {x: 0, y: 0, z: 0}
+    wheelCircumference: 0
+    torque: 0
+    parentRigidbody: {fileID: 0}
+    wheelObject: {fileID: 0}
+    hitPointForce: 0
+    localVelocity: {x: 0, y: 0, z: 0}
+  wheelSize: 0.53
+  maxTorque: 450
+  wheelGrip: 12
+  maxGrip: 12
+  frictionCoWheel: 0.022
+  suspensionForce: 90
+  dampAmount: 2.5
+  suspensionForceClamp: 200
+  massInKg: 400
+  input: {x: 0, y: 0}
+  Forwards: 0
 --- !u!1 &1888203457
 GameObject:
   m_ObjectHideFlags: 0
