@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 1292833115}
   - component: {fileID: 1292833114}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 1753276767}
   - component: {fileID: 1753276766}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -659,5 +659,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 1610477278}
   - {fileID: 281535388}
-  - {fileID: 1753276770}
   - {fileID: 1888203461}
+  - {fileID: 1753276770}
